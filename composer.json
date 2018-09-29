@@ -1,0 +1,33 @@
+{
+  "name": "vatgia/model",
+  "description": "Laravel model support multi connection format master - slaves",
+  "keywords": [
+    "laravel",
+    "model",
+    "master slaves connection laravel",
+    "multi connection laravel"
+  ],
+  "authors": [{
+    "name": "Stephen Nguyễn",
+    "email": "ntdinh1987@gmail.com"
+  }],
+  "require": {
+    "php": "^7.0",
+    "illuminate/database": "*"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "VatGia\\Model\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
