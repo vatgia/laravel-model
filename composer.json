@@ -1,19 +1,23 @@
 {
-  "name": "vatgia/model",
-  "description": "Laravel model support multi connection format master - slaves",
+  "name": "vatgia/laravel-model",
+  "description": "Laravel model support multi connection format master - slaves. Connect random a slave with weight",
   "keywords": [
     "laravel",
+    "lumen",
     "model",
     "master slaves connection laravel",
-    "multi connection laravel"
+    "multi connection laravel",
+    "multi connection lumen",
+    "laravel lumen connect random database with weight"
   ],
-  "authors": [{
-    "name": "Stephen Nguyễn",
-    "email": "ntdinh1987@gmail.com"
-  }],
+  "authors": [
+    {
+      "name": "Stephen Nguyễn",
+      "email": "ntdinh1987@gmail.com"
+    }
+  ],
   "require": {
-    "php": "^7.0",
-    "illuminate/database": "*"
+    "php": "^7.0"
   },
   "require-dev": {
   },
@@ -22,7 +26,6 @@
       "VatGia\\Model\\": "src/"
     },
     "files": [
-      "src/helpers.php"
     ]
   },
   "config": {
