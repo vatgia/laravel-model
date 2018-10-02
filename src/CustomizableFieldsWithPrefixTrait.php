@@ -24,7 +24,7 @@ trait CustomizableFieldsWithPrefixTrait
     public function fields($fields = null, $prefix = null)
     {
 
-        $fields = $fields ?? '*';
+        $fields = $fields ? $fields : '*';
 
         $prefix = $prefix ?? $this->prefix ?? '';
 
