@@ -11,6 +11,11 @@ namespace VatGia\Model;
 
 class MySQLConnectionHelper
 {
+
+    const LOG_PATH_CONNECT_FAIL_PATTERN = 'logs/connection_fail_%s.log';
+
+    const MAX_CONNECT_FAIL = 100;
+
     /**
      * Set the connection associated with the model.
      *
@@ -29,7 +34,11 @@ class MySQLConnectionHelper
 
             $connection = static::getRandomConnection($connections);
 
-            return $connections[$connection];
+            if (!$connection) {
+                throw new \InvalidArgumentException('No database is available!');
+            }
+
+            return $connection ? $connections[$connection] : [];
         }
     }
 
@@ -41,6 +50,20 @@ class MySQLConnectionHelper
      */
     protected static function isAvailableConnection($connection)
     {
+
+        $host = $connection['host'] ?? $connection['read']['host'] ?? null;
+        if (!$host) {
+            return false;
+        }
+
+        $connect_fail_count = (int)@filesize(sprintf(storage_path(static::LOG_PATH_CONNECT_FAIL_PATTERN), $host));
+
+        $max_connection_retry = (int)static::MAX_CONNECT_FAIL;
+
+        if ($connect_fail_count/2 > $max_connection_retry) {
+            return false;
+        }
+
         return is_array($connection)
             && isset($connection['driver'])
             && (
@@ -94,5 +117,34 @@ class MySQLConnectionHelper
         shuffle($keys);
 
         return (string)reset($keys);
+    }
+
+    public static function handlePDOException(\Exception $e)
+    {
+        if ($e instanceof \PDOException) {
+            //Log khi connect mysql fail
+            $connection = app('last_connection');
+            $log_path_pattern = storage_path(static::LOG_PATH_CONNECT_FAIL_PATTERN);
+            $host = $connection['host'] ?? $connection['read']['host'] ?? '';
+            static::appendToLogFile(sprintf($log_path_pattern, $host), ' ');
+            $content = date('H:i:s d/m/Y') . ': Connection fail from ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL;
+            static::appendToLogFile(sprintf($log_path_pattern, $host . '_detail'), $content);
+        }
+    }
+
+    public static function handleQueryException(\Exception $e)
+    {
+        if ($e instanceof \Illuminate\Database\QueryException) {
+            return;
+        }
+    }
+
+    protected static function appendToLogFile($log_path, $content)
+    {
+        $handle = fopen($log_path, 'a+');
+        if ($handle) {
+            fwrite($handle, $content);
+            fclose($handle);
+        }
     }
 }
