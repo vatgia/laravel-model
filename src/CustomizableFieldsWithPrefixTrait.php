@@ -35,6 +35,10 @@ trait CustomizableFieldsWithPrefixTrait
             return $value != '*' ? $prefix . trim($value) : $value;
         }, $fields);
 
+        if (!$fields || empty($fields) || in_array('*', $fields)) {
+            return $this;
+        }
+
         $fields = array_filter(array_unique(array_merge($this->defaultFieldsSelect, $fields)));
 
         if (!$fields || empty($fields) || in_array('*', $fields)) {
