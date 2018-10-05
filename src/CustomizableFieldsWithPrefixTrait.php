@@ -29,14 +29,15 @@ trait CustomizableFieldsWithPrefixTrait
         $prefix = $prefix ?? $this->prefix ?? '';
 
         $fields = is_array($fields) ? $fields : explode(',', $fields);
+        $fields = array_filter(array_map('trim', $fields));
 
         $fields = array_map(function ($value) use ($prefix) {
             return $value != '*' ? $prefix . trim($value) : $value;
         }, $fields);
 
-        $fields = array_unique(array_merge($this->defaultFieldsSelect, $fields));
+        $fields = array_filter(array_unique(array_merge($this->defaultFieldsSelect, $fields)));
 
-        if (in_array('*', $fields)) {
+        if (!$fields || empty($fields) || in_array('*', $fields)) {
             return $this;
         }
 
