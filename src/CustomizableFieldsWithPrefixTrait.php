@@ -16,6 +16,8 @@ namespace VatGia\Model;
 trait CustomizableFieldsWithPrefixTrait
 {
 
+    public $defaultFieldsSelect = [];
+
     /**
      * @param null $fields
      * @param null $prefix
@@ -34,7 +36,9 @@ trait CustomizableFieldsWithPrefixTrait
             return $value != '*' ? $prefix . trim($value) : $value;
         }, $fields);
 
-        return $this->select($fields);
+        $fields = array_unique(array_merge($this->defaultFieldsSelect, $fields));
+
+        return $this->addSelect($fields);
     }
 
 }

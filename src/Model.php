@@ -27,8 +27,7 @@ class Model extends LaravelModel
     public function setConnection($name)
     {
         $connection = config('database.connections.' . $name);
-        if(!$connection)
-        {
+        if (!$connection) {
             throw new InvalidArgumentException("Database [$name] not configured.");
         }
 
