@@ -26,8 +26,6 @@ trait CustomizableFieldsWithPrefixTrait
     public function fields($fields = null, $prefix = null)
     {
 
-        $fields = $fields ? $fields : '*';
-
         $prefix = $prefix ?? $this->prefix ?? '';
 
         $fields = is_array($fields) ? $fields : explode(',', $fields);
@@ -37,6 +35,10 @@ trait CustomizableFieldsWithPrefixTrait
         }, $fields);
 
         $fields = array_unique(array_merge($this->defaultFieldsSelect, $fields));
+
+        if (in_array('*', $fields)) {
+            return $this;
+        }
 
         return $this->addSelect($fields);
     }
