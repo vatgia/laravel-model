@@ -16,6 +16,7 @@ class Model extends LaravelModel
 {
 
     use CustomizableFieldsWithPrefixTrait;
+    use \Awobaz\Compoships\Compoships;
 
     public function __construct(array $attributes = [])
     {
