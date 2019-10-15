@@ -56,6 +56,7 @@ class MySQLConnectionHelper
             return false;
         }
 
+        /*
         $connect_fail_count = (int)@filesize(sprintf(storage_path(static::LOG_PATH_CONNECT_FAIL_PATTERN), $host));
 
         $max_connection_retry = (int)static::MAX_CONNECT_FAIL;
@@ -63,6 +64,7 @@ class MySQLConnectionHelper
         if ($connect_fail_count/2 > $max_connection_retry) {
             return false;
         }
+        */
 
         return is_array($connection)
             && isset($connection['driver'])
