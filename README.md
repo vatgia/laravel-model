@@ -1,14 +1,14 @@
-Vật Giá Laravel (Lumen) Model giúp sử dụng nhiều kết nối với database theo dạng master - slaves
+Vật Giá Laravel (Lumen) Model help connect multiple mysql database (master - slave) easy.
 
 
-## Tính năng
+## Functions
 
-- Connect nhiều database với mô hình master - slaves
-- Connect ngẫu nhiên 1 database slaves với trọng số được cấu hình
+- Connect multiple databases with model master - slave
+- Randomly connect 1 database slave with weight config
 
 ## Sử dụng
 
-Cấu hình file database như sau:
+Config follow bellow:
 
     
     <?php
@@ -108,10 +108,10 @@ Cấu hình file database như sau:
     ];
     
 
-Các model được tạo cần kế thừa từ class ```VatGia\Model\Model```
+Your model need extend from ```VatGia\Model\Model```
 
 Cách thay đổi database
 
-    News::setConnection('master')
-    News::setConnection('slavse')
-    News::setConnection('slavse.web31')
+    MyModel::setConnection('master')
+    MyModel::setConnection('slavses')
+    MyModel::setConnection('slavses.web31')
